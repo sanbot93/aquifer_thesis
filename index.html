@@ -44,45 +44,17 @@
   <div id="map"></div>
 
   <script>
-    // workaround for old ie
-    if (!window.location.origin) {
-      window.location.origin = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
-    }
     
     var map = L.map('map').setView([50.918619, -116.9], 7);
       L.esri.basemapLayer('Topographic').addTo(map);
     
-      //function serverAuth (callback) {
-      //L.esri.post('https://www.sgrc.selkirk.ca/gis-sandbox/tokens/generateToken', {
-       // username: 'GIS437',
-       // password: 'GIS437',
-        //f: 'json',
-        //expiration: 86400,
-       // client: 'referer',
-       // referer: window.location.origin
-     // }, callback);
-    //}
 
-  //serverAuth(function (error, response) {
-    //if (error) {
-      //return;
-    //}
-
-    L.esri.tiledMapLayer({
+    var tileLayer = L.esri.tiledMapLayer({
       url: 'https://tiles.arcgis.com/tiles/Atlhpf089cGUuFTD/arcgis/rest/services/Aquifer_Thesis_WTL1/MapServer?token=U5EqATJbdVtBTLoSi2k5ve6u8RLtVo9ET1WELhulSU7-ofyiP1nH-nR5EdYxac2j9s2BQGkY-32h5W134D9QprB6Rb6Qi7UKObJK1HwazdWeKBiQ7B2dI1WtSbW-AA156bs7BaIWcDp2DzwjES1_kghkRuRiCGJuQ5U0NW0T1UQwugYPY3orULR0vvz3-mXgZXfIeI5Lx5pB3vSSFlH6Sv2HCwrJoUCiDKSOWTGsXbjwJHflKl_3ZCgkzyZ_9axDt3oFW42nhnUZePcDf61THQ..',
       zoomOffsetAllowance: 0.7
     }).addTo(map);
 
-    //dl.on('authenticationrequired', function (e) {
-      //serverAuth(function (error, response) {
-        //if (error) {
-          //return;
-        //}
-
-        //e.authenticate(response.token);
-      //});
-    //});
-  //});
+    
   </script>
       
 </body>
