@@ -13,84 +13,30 @@
        <li><a href="aboutme.html">About Me</a></li>
     </ul>
   </nav>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+      #map {position: absolute; top: 500; bottom: 500; left: 500; right: 500;}
+    </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
 </head>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
-   
-<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
-<script src="https://unpkg.com/geotiff@0.4.1/dist/main.js"></script>
-<script src="https://unpkg.com/plotty@0.2.0/src/plotty.js"></script>
-<script src="leaflet-geotiff.js"></script>
-<!-- Load any renderer you need -->
-<script src="leaflet-geotiff-plotty.js"></script>
-
-<div >
-    <div style="width:30%;float:left;">
-        <h1>Leaflet geoTIFF demo</h1>
-        Clip the image using a polygon <button type="button" onclick="toggleClip()">Toggle</button></p>
-        Select a color scale 
-        <select onchange="changeColorScale(this)">
-            <option selected="" value="rainbow">Rainbow</option>
-            <option value="viridis">Viridis</option>
-            <option value="greys">Greys</option>
-        </select>
-        0 <img id="colorScaleImage" src="" style="vertical-align: middle; height:20px; width:200px;"/> 30 kts</p>
-        Wind speed at clicked point is <span id="windSpeedValue">?</span></p>
-        Wind direection at clicked point is <span id="windDirectionValue">?</span></p>
-        
-    </div>
-    <div id="mapid" style="width:70%; height:100%;float:left;"></div>   
-</div>
-
-<script>    
-    var toggleClip = function () {
-        var newClipMask = windSpeed.options.clip ? undefined : clipMask;
-        windSpeed.setClip(newClipMask);
-        windDirection.setClip(newClipMask);
-    }
-
-    var changeColorScale = function (selectObject) {
-        windSpeed.setColorScale(selectObject.value);
-        document.getElementById('colorScaleImage').setAttribute('src',windSpeed.colorScaleData);
-    }
-    
-    var mymap = L.map('mapid').setView([-33, 147], 6);
-
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-		id: 'mapbox.streets'
-	}).addTo(mymap);
-
-    var rechargePot = L.leafletGeotiff(
-            url='aquiferpot.tif',
-            options={band: 0,
-                displayMin: 1,
-                displayMax: 5,
-                name: 'Aquifer Recharge Potential',
-                colorScale: 'rainbow',
-                clampLow: false,
-                clampHigh: true,
-                
-            }
-        ).addTo(mymap);
-        
-
-    document.getElementById('colorScaleImage').setAttribute('src',windSpeed.colorScaleData);
-    
-    mymap.on('click', function(e) {        
-        if (!marker) {
-            marker = L.marker([e.latlng.lat,e.latlng.lng]).addTo(mymap);
-        } else {
-            marker.setLatLng([e.latlng.lat,e.latlng.lng]);
-        }
-        document.getElementById("windSpeedValue").innerHTML = windSpeed.getValueAtLatLng(e.latlng.lat,e.latlng.lng).toFixed(1);
-        document.getElementById("windDirectionValue").innerHTML = windDirection.getValueAtLatLng(e.latlng.lat,e.latlng.lng).toFixed(0);
-    });
-   
-</script>
 <body>
+  <div id = "map"></div>
+  <script>
+    var map = L.map('map').setView([50.918619, -116.9], 7);
 
+    var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	          maxZoom: 17,
+	          attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+    }).addTo(map);
+
+    var layer = L.leafletGeotiff(url='https://github.com/sanbot93/aquifer_thesis/blob/main/aquiferpot.tif', options={name: 'Wind speed', colorScale: 'rainbow'}).addTo(map);
+  </script>
 </body>
 </html>
