@@ -13,100 +13,84 @@
        <li><a href="aboutme.html">About Me</a></li>
     </ul>
   </nav>
-
-  <!-- Load Leaflet code library: see http://leafletjs.com/download.html -->
-  <!--leaflet-->
-  <link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-/>
-  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
-
-  <!--deps-->
-  <script src="https://unpkg.com/geotiff@1.0.0-beta.7/dist/geotiff.bundle.js"></script>
-  <script src="https://unpkg.com/plotty@0.4.4/dist/plotty.min.js"></script>
-
-<!--the plugin-->
-  <script src="../dist/leaflet-geotiff.js"></script>
-  <script src="../dist/leaflet-geotiff-plotty.js"></script>
-  <script src="map.js"></script>
-
-<!--The Map JS-->
-  <script src="map.js"></script>
-  
-  <!-- Position the map and title with Cascading Style Sheet (CSS) -->
-  <style>
-  body { margin:0; padding:0; }
-  #map { height: 600px;
-        width: 100% ; 
-        margin: auto; }
-  #map-title { position: relative; margin-top: 10px; margin-left: 50px; float: left; background: white; border: 2px solid rgba(0,0,0,0.2); padding: 6px 8px; font-family: Helvetica; font-weight: bold; font-size: 24px; z-index: 800; }
-  </style>
 </head>
-<body>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
+   
+<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/geotiff@0.4.1/dist/main.js"></script>
+<script src="https://unpkg.com/plotty@0.2.0/src/plotty.js"></script>
+<script src="leaflet-geotiff.js"></script>
+<!-- Load any renderer you need -->
+<script src="leaflet-geotiff-plotty.js"></script>
 
-  <!-- Display the map and title with HTML division tags  -->
-  <div id="map-title">Aquifer Recharge Potential</div>
-  <div id="controls"></div>
-  <h2>Leaflet GeoTIFF (plotty example)</h2>
-
-  <form>
-    <p>
-      <label>displayMin:
-        <input type="number" id="displayMin" value="0" />
-      </label>
-      <label>displayMax:
-        <input type="number" id="displayMax" value="10" />
-      </label>
-    </p>
-    <p>
-      <label>clampMin:
-        <input type="checkbox" id="clampLow" />
-      </label>
-      <label>clampMax:
-        <input type="checkbox" id="clampHigh" />
-      </label>
-    </p>
-    <p>
-      <label>
-        colorScale:
-        <select id="colorScale">
-          <option>viridis</option>
-          <option>inferno</option>
-          <option>turbo</option>
-          <option>rainbow</option>
-          <option>jet</option>
-          <option>hsv</option>
-          <option>hot</option>
-          <option>cool</option>
-          <option>spring</option>
-          <option>summer</option>
-          <option>winter</option>
-          <option>autumn</option>
-          <option>bone</option>
-          <option>copper</option>
-          <option>greys</option>
-          <option>yignbu</option>
-          <option>greens</option>
-          <option>yiorrd</option>
-          <option>bluered</option>
-          <option>rdbu</option>
-          <option>picnic</option>
-          <option>portland</option>
-          <option>blackbody</option>
-          <option>earth</option>
-          <option>electric</option>
-          <option>magma</option>
-          <option>plasma</option>
+<div >
+    <div style="width:30%;float:left;">
+        <h1>Leaflet geoTIFF demo</h1>
+        Clip the image using a polygon <button type="button" onclick="toggleClip()">Toggle</button></p>
+        Select a color scale 
+        <select onchange="changeColorScale(this)">
+            <option selected="" value="rainbow">Rainbow</option>
+            <option value="viridis">Viridis</option>
+            <option value="greys">Greys</option>
         </select>
-      </label>
-    </p>
-    <p>
-      <button id="getBounds">Zoom to bounds</button>
-      <button id="getColorbarOptions">Log getColorbarOptions</button>
-    </p>
-  </form>
+        0 <img id="colorScaleImage" src="" style="vertical-align: middle; height:20px; width:200px;"/> 30 kts</p>
+        Wind speed at clicked point is <span id="windSpeedValue">?</span></p>
+        Wind direection at clicked point is <span id="windDirectionValue">?</span></p>
+        
+    </div>
+    <div id="mapid" style="width:70%; height:100%;float:left;"></div>   
+</div>
 
+<script>    
+    var toggleClip = function () {
+        var newClipMask = windSpeed.options.clip ? undefined : clipMask;
+        windSpeed.setClip(newClipMask);
+        windDirection.setClip(newClipMask);
+    }
+
+    var changeColorScale = function (selectObject) {
+        windSpeed.setColorScale(selectObject.value);
+        document.getElementById('colorScaleImage').setAttribute('src',windSpeed.colorScaleData);
+    }
+    
+    var mymap = L.map('mapid').setView([-33, 147], 6);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		id: 'mapbox.streets'
+	}).addTo(mymap);
+
+    var rechargePot = L.leafletGeotiff(
+            url='aquiferpot.tif',
+            options={band: 0,
+                displayMin: 1,
+                displayMax: 5,
+                name: 'Aquifer Recharge Potential',
+                colorScale: 'rainbow',
+                clampLow: false,
+                clampHigh: true,
+                
+            }
+        ).addTo(mymap);
+        
+
+    document.getElementById('colorScaleImage').setAttribute('src',windSpeed.colorScaleData);
+    
+    mymap.on('click', function(e) {        
+        if (!marker) {
+            marker = L.marker([e.latlng.lat,e.latlng.lng]).addTo(mymap);
+        } else {
+            marker.setLatLng([e.latlng.lat,e.latlng.lng]);
+        }
+        document.getElementById("windSpeedValue").innerHTML = windSpeed.getValueAtLatLng(e.latlng.lat,e.latlng.lng).toFixed(1);
+        document.getElementById("windDirectionValue").innerHTML = windDirection.getValueAtLatLng(e.latlng.lat,e.latlng.lng).toFixed(0);
+    });
+   
+</script>
+<body>
 
 </body>
 </html>
