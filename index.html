@@ -45,7 +45,6 @@
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
         <script src="js/leaflet-search.js"></script>
-        <script src="data/Parcels_1.js"></script>
         <script src="data/ALR_2.js"></script>
         <script src="data/Wetlands_4.js"></script>
         <script src="data/AgricultureUse_5.js"></script>
@@ -74,105 +73,7 @@
         });
         layer_EsriWorldtopo_0;
         map.addLayer(layer_EsriWorldtopo_0);
-        function pop_Parcels_1(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PlanNumber'] !== null ? autolinker.link(feature.properties['PlanNumber'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PIN'] !== null ? autolinker.link(feature.properties['PIN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PID'] !== null ? autolinker.link(feature.properties['PID'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ParcelStat'] !== null ? autolinker.link(feature.properties['ParcelStat'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['RegionalDi'] !== null ? autolinker.link(feature.properties['RegionalDi'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ParcelClas'] !== null ? autolinker.link(feature.properties['ParcelClas'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ParcelStar'] !== null ? autolinker.link(feature.properties['ParcelStar'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['OwnerType'] !== null ? autolinker.link(feature.properties['OwnerType'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ModifiedDa'] !== null ? autolinker.link(feature.properties['ModifiedDa'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Municipali'] !== null ? autolinker.link(feature.properties['Municipali'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['SHAPE_Leng'] !== null ? autolinker.link(feature.properties['SHAPE_Leng'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_Parcels_1_0() {
-            return {
-                pane: 'pane_Parcels_1',
-                opacity: 1,
-                color: 'rgba(0,0,0,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 1.0,
-                fillOpacity: 0,
-                interactive: false,
-            }
-        }
-        map.createPane('pane_Parcels_1');
-        map.getPane('pane_Parcels_1').style.zIndex = 401;
-        map.getPane('pane_Parcels_1').style['mix-blend-mode'] = 'normal';
-        var layer_Parcels_1 = new L.geoJson(json_Parcels_1, {
-            attribution: '',
-            interactive: false,
-            dataVar: 'json_Parcels_1',
-            layerName: 'layer_Parcels_1',
-            pane: 'pane_Parcels_1',
-            onEachFeature: pop_Parcels_1,
-            style: style_Parcels_1_0,
-        });
-        bounds_group.addLayer(layer_Parcels_1);
-        map.addLayer(layer_Parcels_1);
-        function pop_ALR_2(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ALR_LINE_I'] !== null ? autolinker.link(feature.properties['ALR_LINE_I'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['BOUNDARY_T'] !== null ? autolinker.link(feature.properties['BOUNDARY_T'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['FEATURE_CO'] !== null ? autolinker.link(feature.properties['FEATURE_CO'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['FEATURE_LE'] !== null ? autolinker.link(feature.properties['FEATURE_LE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['GEOMETRY_L'] !== null ? autolinker.link(feature.properties['GEOMETRY_L'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fme_featur'] !== null ? autolinker.link(feature.properties['fme_featur'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
+        
         function style_ALR_2_0() {
             return {
                 pane: 'pane_ALR_2',
@@ -485,7 +386,7 @@
         bounds_group.addLayer(layer_ColumbiaBasinHydrologicRegions_7);
         map.addLayer(layer_ColumbiaBasinHydrologicRegions_7);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/ColumbiaBasinHydrologicRegions_7.png" /> Columbia Basin Hydrologic Regions': layer_ColumbiaBasinHydrologicRegions_7,'<img src="legend/MappedAquifers_6.png" /> Mapped Aquifers': layer_MappedAquifers_6,'<img src="legend/AgricultureUse_5.png" /> AgricultureUse': layer_AgricultureUse_5,'<img src="legend/Wetlands_4.png" /> Wetlands': layer_Wetlands_4,"Aquifer Recharge Potential": layer_AquiferRechargePotential_3,'<img src="legend/ALR_2.png" /> ALR': layer_ALR_2,'<img src="legend/Parcels_1.png" /> Parcels': layer_Parcels_1,"Esri World topo": layer_EsriWorldtopo_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/ColumbiaBasinHydrologicRegions_7.png" /> Columbia Basin Hydrologic Regions': layer_ColumbiaBasinHydrologicRegions_7,'<img src="legend/MappedAquifers_6.png" /> Mapped Aquifers': layer_MappedAquifers_6,'<img src="legend/AgricultureUse_5.png" /> AgricultureUse': layer_AgricultureUse_5,'<img src="legend/Wetlands_4.png" /> Wetlands': layer_Wetlands_4,"Aquifer Recharge Potential": layer_AquiferRechargePotential_3,'<img src="legend/ALR_2.png" /> ALR': layer_ALR_2,"Esri World topo": layer_EsriWorldtopo_0,}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
             layer: layer_MappedAquifers_6,
