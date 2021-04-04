@@ -68,7 +68,7 @@
     }
 
     var dl = L.esri.tiledMapLayer({
-      url: 'https://www.sgrc.selkirk.ca/gis-sandbox/rest/services/Sbotero/AquiferThesis/MapServer',
+      url: 'https://www.sgrc.selkirk.ca/gis-sandbox/rest/services/Sbotero/AquiferThesis/MapServer/tile/{z}/{y}/{x}',
       opacity: 1,
       token: response.token
     }).addTo(map);
