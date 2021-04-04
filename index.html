@@ -45,7 +45,7 @@
 
   <script>
     
-    var map = L.map('map').setView([50.918619, -116.9], 7);
+    var map = L.map('map', {center: [50.918619, -116.9], zoom: 7, layers: tileLayer});
       L.esri.basemapLayer('Topographic').addTo(map);
     
 
@@ -54,7 +54,7 @@
       zoomOffsetAllowance: 0.7
     }).addTo(map);
 
-    L.control.layers(map, tileLayer).addTo(map);
+    
   </script>
       
 </body>
