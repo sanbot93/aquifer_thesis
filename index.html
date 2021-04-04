@@ -67,8 +67,8 @@
       return;
     }
 
-    var dl = L.esri.tiledMapLayer({
-      url: 'https://www.sgrc.selkirk.ca/gis-sandbox/rest/services/Sbotero/AquiferThesis/MapServer/layers/{x}',
+    var dl = L.esri.dynamicMapLayer({
+      url: 'https://www.sgrc.selkirk.ca/gis-sandbox/rest/services/Sbotero/AquiferThesis/MapServer',
       token: response.token
     }).addTo(map);
 
