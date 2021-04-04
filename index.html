@@ -43,17 +43,46 @@
   <div id="map"></div>
 
   <script>
-
-  var map = L.map('map').setView([50.918619, -116.9], 9);
-  L.esri.basemapLayer('Topographic').addTo(map);
-
-  var dl = L.esri.tiledMapLayer({
-    url: 'https://www.sgrc.selkirk.ca/gis-sandbox/rest/services/Sbotero/AquiferThesis/MapServer',
-    opacity: 1,
-    token: {"token":"v-dJ8aMpGNnh-puMcCSGZvc1UMxweYg0f1RFvU-Qs3f34hf5jL_L1RJOxpY-mxS2o9gFtQ-B6u70d3nUngGmMs3PFa4GADcVaQHHJCpCf6H7CM5fALlY5JCBWYrrgi2ActNRpOK6GsBhFewrG0t6qAyTWEqveC4cgizy6Bh7UsY.","expires":1617644272662}
-  }).addTo(map);
+    // workaround for old ie
+    if (!window.location.origin) {
+      window.location.origin = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+    }
     
+    var map = L.map('map').setView([34.089, -116.865], 9);
+      L.esri.basemapLayer('Topographic').addTo(map);
+    
+      function serverAuth (callback) {
+      L.esri.post('https://www.sgrc.selkirk.ca/gis-sandbox/tokens/generateToken', {
+        username: 'GIS437',
+        password: 'GIS437',
+        f: 'json',
+        expiration: 86400,
+        client: 'referer',
+        referer: window.location.origin
+      }, callback);
+    }
 
+  serverAuth(function (error, response) {
+    if (error) {
+      return;
+    }
+
+    var dl = L.esri.dynamicMapLayer({
+      url: 'https://www.sgrc.selkirk.ca/gis-sandbox/rest/services/Sbotero/AquiferThesis/MapServer',
+      opacity: 1,
+      token: response.token
+    }).addTo(map);
+
+    dl.on('authenticationrequired', function (e) {
+      serverAuth(function (error, response) {
+        if (error) {
+          return;
+        }
+
+        e.authenticate(response.token);
+      });
+    });
+  });
   </script>
       
 </body>
