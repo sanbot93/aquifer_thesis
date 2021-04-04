@@ -48,7 +48,7 @@
     tap: false
   });
 
-  var layer = L.leafletGeotiff(url='aquiferpot.tif', options={name: 'Wind speed', colorScale: 'rainbow'}).addTo(map)
+  var layer = L.leafletGeotiff(url='https://github.com/sanbot93/aquifer_thesis/blob/main/aquiferpot.tif', options={name: 'Wind speed', colorScale: 'rainbow'}).addTo(map)
   /* display basemap tiles -- see others at https://leaflet-extras.github.io/leaflet-providers/preview/ */
   L.tileLayer(
     'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
