@@ -44,10 +44,10 @@
 
   <script>
 
-  var map = L.map('map').setView([34.089, -116.865], 9);
+  var map = L.map('map').setView([50.918619, -116.9], 9);
   L.esri.basemapLayer('Topographic').addTo(map);
 
-  var dl = L.esri.dynamicMapLayer({
+  var dl = L.esri.tiledMapLayer({
     url: 'https://www.sgrc.selkirk.ca/gis-sandbox/rest/services/Sbotero/AquiferThesis/MapServer',
     opacity: 1,
     token: {"token":"VMMkWBSf5DGr-ENv9UHBUFeUVMiFF_JxUa5xuFu4odfwIFYara3LKF4aHBH6XWGqHCCzaJM5iPu9Cu6MppyrQ911fALoiW3pN2n5V0sW-IxAhwumIQcX8iIQkMT3B577bD0ujmKR8ATWJddR4ZpzEql8HtAl4msT78wXhpERvKw.","expires":1617643016557}
