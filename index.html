@@ -69,7 +69,9 @@
 
     var dl = L.esri.tiledMapLayer({
       url: 'https://www.sgrc.selkirk.ca/gis-sandbox/rest/services/Sbotero/AquiferThesis/MapServer/layers',
-      token: response.token
+      token: response.token,
+      minZoom: 3,
+      maxZoom: 10
     }).addTo(map);
 
     dl.on('authenticationrequired', function (e) {
